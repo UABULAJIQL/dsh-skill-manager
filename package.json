@@ -10,7 +10,7 @@
     "./policy": "./lib/policy.js",
     "./package.json": "./package.json"
   },
-  "files": ["lib/index.js", "lib/client.js", "lib/policy.js", "cordis.patch.yml", "README.md", "test"],
+  "files": ["lib/index.js", "lib/client.js", "lib/policy.js", "cordis.patch.yml", "README.md", "README.en.md", "test"],
   "license": "MIT",
   "dsh": {
     "bundle": {"patch": "./cordis.patch.yml"},

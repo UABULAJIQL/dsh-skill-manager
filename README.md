@@ -1,16 +1,24 @@
 # @sqnb/dsh-skill-manager
 
+中文 | [English](README.en.md)
+
 DSH 的 Skill 管理插件，可配置本地 skill 扫描路径，保留 DSH 官方默认路径，并按名称启用或禁用已发现的 skill。
 
 ## 安装
+
+从 GitHub 安装到 `web` profile：
+
+```powershell
+dsh plugin --profile web add https://codeload.github.com/UABULAJIQL/dsh-skill-manager/tar.gz/refs/heads/main
+```
+
+安装后完整停止并重新启动 `dsh web`。浏览器刷新不会加载新的 profile bundle。
 
 从本地 checkout 安装时使用 `file:` 协议：
 
 ```powershell
 dsh plugin --profile web add file:C:/path/to/dsh_plugin/dsh-skill-manager
 ```
-
-安装后完整停止并重新启动 `dsh web`。浏览器刷新不会加载新的 profile bundle。
 
 不要直接传入本地目录路径。pnpm 会将其解析为 `link:`，只链接源码而不安装插件运行时依赖，可能导致 `dsh web` 无法启动。
 
