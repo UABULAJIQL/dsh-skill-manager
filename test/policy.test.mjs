@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { filterSkillCandidates, normalizeSkillManagerSettings } from '../lib/policy.js'
+import { MANAGED_SKILL_RANK_OFFSET, normalizeSkillManagerSettings, projectSkillCandidates } from '../lib/policy.js'
 
 assert.deepEqual(normalizeSkillManagerSettings({
   includeDefaultRoots: false,
@@ -12,8 +12,13 @@ assert.deepEqual(normalizeSkillManagerSettings({
 })
 
 const candidates = [
-  { name: 'review', path: 'C:/a/SKILL.md' },
-  { name: 'build', path: 'C:/b/SKILL.md' },
+  { name: 'review', path: 'C:/a/SKILL.md', rank: 40, invocation: { modelInvocable: true, userInvocable: true } },
+  { name: 'build', path: 'C:/b/SKILL.md', rank: 60, invocation: { modelInvocable: true, userInvocable: false } },
 ]
-assert.deepEqual(filterSkillCandidates(candidates, ['review']), [candidates[1]])
+const projected = projectSkillCandidates(candidates, ['review'])
+assert.equal(projected.length, 2)
+assert.equal(projected[0].rank, 40 - MANAGED_SKILL_RANK_OFFSET)
+assert.deepEqual(projected[0].invocation, { modelInvocable: false, userInvocable: false })
+assert.equal(projected[1].rank, 60 - MANAGED_SKILL_RANK_OFFSET)
+assert.equal(projected[1].invocation, candidates[1].invocation)
 console.log('policy tests passed')
