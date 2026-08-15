@@ -8,9 +8,10 @@
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
     "./policy": "./lib/policy.js",
+    "./preset-provider": "./lib/preset-provider.js",
     "./package.json": "./package.json"
   },
-  "files": ["lib/index.js", "lib/client.js", "lib/policy.js", "cordis.patch.yml", "README.md", "README.en.md", "test"],
+  "files": ["lib/index.js", "lib/client.js", "lib/policy.js", "lib/preset-composition.js", "lib/preset.js", "lib/preset-provider.js", "lib/provider.js", "lib/store.js", "cordis.patch.yml", "README.md", "README.en.md", "test"],
   "license": "MIT",
   "dsh": {
     "bundle": {"patch": "./cordis.patch.yml"},

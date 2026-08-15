@@ -1,6 +1,4 @@
-# Replace the static filesystem provider with the settings-aware manager.
-- id: skill-filesystem
-  disabled: true
+# The global entry owns settings and provisions a user-managed preset.
 - insert:
     - id: sqnb-skill-manager
       name: '@sqnb/dsh-skill-manager'

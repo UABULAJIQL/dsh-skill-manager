@@ -24,10 +24,11 @@ Do not pass a local directory path bare. pnpm treats it as `link:`, which links 
 
 ## Usage
 
-1. Open **Settings > Skills**.
-2. Keep **Use DSH official default roots** enabled to include project, user, bundled, and `~/.agents/skills` roots.
-3. Add absolute paths containing `SKILL.md` files or skill directories under **Scan paths**.
-4. Toggle skills under **Discovered skills**. Long descriptions are limited to two lines by default; click **Expand** to view the full text.
+1. After installation and restart, choose **Code (Skill Manager)** from the session preset selector. This switches only the current session; existing sessions keep their own preset.
+2. Open **Settings > Skills**.
+3. Keep **Use DSH official default roots** enabled to include project, user, bundled, and `~/.agents/skills` roots.
+4. Add absolute paths containing `SKILL.md` files or skill directories under **Scan paths**.
+5. Toggle skills under **Discovered skills**. Long descriptions are limited to two lines by default; click **Expand** to view the full text.
 
 ## Configuration
 
@@ -45,8 +46,9 @@ The configuration file is `skill-manager.json` in the DSH home directory:
 
 ## Behavior
 
+- Installation uses the official `agentPresets.copy()` API to create the user-owned `skill-manager-code` preset, then replaces its `skill-filesystem` row with the manager provider. It does not modify the official `code` preset or register a provider during `agent/created`.
 - Reuses DSH's official `FileSystemSkillProvider` for `SKILL.md` parsing, resource roots, and file watching.
-- Path or default-root changes rescan the current session's skill catalog.
+- Path or default-root changes rescan the catalog of sessions using **Code (Skill Manager)**.
 - Enabling or disabling one skill updates its row and provider state without clearing or redrawing the full list.
 
 ## Uninstalling
@@ -55,7 +57,7 @@ The configuration file is `skill-manager.json` in the DSH home directory:
 dsh plugin --profile web remove @sqnb/dsh-skill-manager
 ```
 
-Restart `dsh web` after removal to restore the built-in filesystem provider.
+Restart `dsh web` after removal. `skill-manager-code` is a user preset: before uninstalling, switch any sessions that use it to another preset and remove **Code (Skill Manager)** from preset settings, so an old session cannot try to resolve a removed plugin entrypoint.
 
 ## License
 

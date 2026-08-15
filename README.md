@@ -24,10 +24,11 @@ dsh plugin --profile web add file:C:/path/to/dsh_plugin/dsh-skill-manager
 
 ## 使用
 
-1. 打开 **设置 > Skills**。
-2. 保持 **使用 DSH 官方默认路径** 启用，以包含项目级、用户级、内置路径和 `~/.agents/skills`。
-3. 在 **扫描路径** 中添加包含 `SKILL.md` 或 skill 子目录的绝对路径。
-4. 在 **已发现的 Skills** 中切换启用状态。长描述默认显示两行，点击 **展开** 查看完整内容。
+1. 安装并重启后，在会话的 preset 选择器中选择 **Code (Skill Manager)**。该操作只切换当前会话；原有会话保持自己的 preset。
+2. 打开 **设置 > Skills**。
+3. 保持 **使用 DSH 官方默认路径** 启用，以包含项目级、用户级、内置路径和 `~/.agents/skills`。
+4. 在 **扫描路径** 中添加包含 `SKILL.md` 或 skill 子目录的绝对路径。
+5. 在 **已发现的 Skills** 中切换启用状态。长描述默认显示两行，点击 **展开** 查看完整内容。
 
 ## 配置
 
@@ -45,8 +46,9 @@ dsh plugin --profile web add file:C:/path/to/dsh_plugin/dsh-skill-manager
 
 ## 行为
 
+- 安装时通过官方 `agentPresets.copy()` 创建用户 preset `skill-manager-code`，并在该 preset 内替换 `skill-filesystem` 为 manager provider。不会修改官方 `code` preset，也不会在 `agent/created` 生命周期中注册 provider。
 - 复用 DSH 官方 `FileSystemSkillProvider` 的 `SKILL.md` 解析、资源目录和文件 watcher。
-- 路径或默认根目录变化后会重新扫描当前会话的 skill catalog。
+- 路径或默认根目录变化后会重新扫描使用 **Code (Skill Manager)** 的会话 catalog。
 - 启用或禁用单个 skill 只更新当前行和 provider 状态，不会清空或重绘整个列表。
 
 ## 卸载
@@ -55,7 +57,7 @@ dsh plugin --profile web add file:C:/path/to/dsh_plugin/dsh-skill-manager
 dsh plugin --profile web remove @sqnb/dsh-skill-manager
 ```
 
-完成后重新启动 `dsh web`，内置 filesystem provider 会恢复。
+完成后重新启动 `dsh web`。`skill-manager-code` 是用户 preset；在卸载前请将使用它的会话切换回其他 preset，并在 preset 设置中删除 **Code (Skill Manager)**，避免旧会话在缺少插件 entrypoint 时无法重新打开。
 
 ## 许可证
 
